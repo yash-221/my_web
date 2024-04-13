@@ -1,46 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import Headers from '../components/Headers';
 import '../styles/header.css';
-import CategoryAPI from '../services/CategoryAPI';
 
 const Category = () => {
-    const [categoryData, setCategoryData] = useState([]);
+    const [categoryData, setCategoryData] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState('Laptops');
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchCategoryData = async () => {
+            const host = 'https://testapi.arbsindia.com/public/api';
+            const endpoint = 'get-public-category-details-list';
+
             try {
-                const data = await CategoryAPI();
+                const response = await fetch(`${host}/${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        business_id: "105" // Make sure to stringify the business_id
+                    })
+                });
+
+                const data = await response.json();
                 setCategoryData(data);
-                setLoading(false);
             } catch (error) {
                 console.error("Error fetching category data:", error);
             }
         };
 
-        fetchData();
+        fetchCategoryData();
     }, []);
 
     const handleCategorySelect = (categoryName) => {
         setSelectedCategory(categoryName);
     };
 
+    // Render loading state or category data
     return (
         <div>
-            <Headers />
+            <Headers /> {/* Include the Headers component */}
             <div style={{ textAlign: 'center' }}>
                 <button style={selectedCategory === 'Laptops' ? { ...buttonStyle, backgroundColor: 'Black' } : buttonStyle} onClick={() => handleCategorySelect('Laptops')}>Laptop</button>
                 <button style={buttonStyle} onClick={() => handleCategorySelect('Smartphones')}>Smartphones</button>
-                <button style={buttonStyle} onClick={() => handleCategorySelect('bottle')}>Bottles</button>
-                <button style={buttonStyle} onClick={() => handleCategorySelect('cars')}>Cars</button>
+                <button style={buttonStyle} onClick={() => handleCategorySelect('Bottles')}>Bottles</button>
+                <button style={buttonStyle} onClick={() => handleCategorySelect('Cars')}>Cars</button>
             </div>
-            {loading ? (
-                <p>Loading...</p>
-            ) : (
-                <div>
+            {categoryData ? (
+                <ul>
                     {categoryData.data.category.map(category => (
-                        <div key={category.id}>
+                        <li key={category.id}>
                             {selectedCategory === category.name && (
                                 <>
                                     <h1 style={{ margin: '18px 0' }}>{category.name}</h1>
@@ -60,15 +69,18 @@ const Category = () => {
                                     </div>
                                 </>
                             )}
-                        </div>
+                        </li>
                     ))}
-                </div>
+                </ul>
+            ) : (
+                <p>Loading...</p>
             )}
         </div>
     );
 };
 
 const buttonStyle = {
+    
     margin: '18px 5px',
     backgroundColor: 'black',
     color: 'white',
@@ -80,3 +92,4 @@ const buttonStyle = {
 };
 
 export default Category;
+

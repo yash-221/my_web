@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Singup from "./pages/Signup";
 import Contact from "./pages/Contact";
 import More from "./pages/More";
+import Footer from "./components/Footer";
 import './App.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
                 <Route path='/contact' element={<Contact />} />
                 <Route path='/more' element={<More />} />
             </Routes>
+       <Footer/>
         </div>
     );
 }
