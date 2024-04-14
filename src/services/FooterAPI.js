@@ -1,4 +1,4 @@
-// FooterAPI.jsx
+
 
 const FooterAPI = async () => {
     try {

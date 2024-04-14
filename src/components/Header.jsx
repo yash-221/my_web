@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 
 
-function Headers() {
+function Header() {
     return (
         <nav className="navbar navbar-expand-lg navbar-light px-5 py-2 shadow-bg sticky-left-corner">
             <div className="container-fluid">
@@ -57,4 +57,4 @@ function Headers() {
     );
 }
 
-export default Headers;
+export default Header;

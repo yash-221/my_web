@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Headers from '../components/Headers';
+import Header from '../components/Header';
 import '../styles/header.css';
 import CategoryAPI from '../services/CategoryAPI';
+import Footer from '../components/Footer';
 
 const Category = () => {
     const [categoryData, setCategoryData] = useState([]);
@@ -28,7 +29,7 @@ const Category = () => {
 
     return (
         <div>
-            <Headers />
+            <Header />
             <div style={{ textAlign: 'center' }}>
                 <button style={selectedCategory === 'Laptops' ? { ...buttonStyle, backgroundColor: 'Black' } : buttonStyle} onClick={() => handleCategorySelect('Laptops')}>Laptop</button>
                 <button style={buttonStyle} onClick={() => handleCategorySelect('Smartphones')}>Smartphones</button>
@@ -64,6 +65,8 @@ const Category = () => {
                     ))}
                 </div>
             )}
+                   <Footer />
+
         </div>
     );
 };
